@@ -1,0 +1,1 @@
+In this game I applied my Python and object-oriented programming skills to build a program that plays the game of Rock Paper Scissors. Built classes that represent the game and its players. Wrote a computer players that follow various different strategies, as well as a human player class that lets a human play the game against the computer.
