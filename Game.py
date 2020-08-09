@@ -61,7 +61,7 @@ class Game:
         print("Game over!")
 
 
-class RandomPlayer(Player):
+class RandomPlayer(Player): # This player will choose randomly evrey round.
     def move(self):
         return random.choice(moves)
 
@@ -71,16 +71,16 @@ class HumanPlayer(Player):
         self.name = name
 
     def move(self):
-        myMove = input("Enter Your Move ('rock', 'paper', 'scissors'): ")
+        myMove = input("Enter Your Move ('Rock', 'Paper', 'Scissors'): ")
         while True:
-            if myMove in moves:
+            if myMove.lower() in moves:
                 break
             print("Invalid Move")
             myMove = input("Enter Your Move again: ")
         return myMove
 
 
-class ReflectPlayer(Player):
+class ReflectPlayer(Player): # This player will copy your choice in this round and play it in the next.
     def __init__(self):
         self.myMove = random.choice(moves)
 
@@ -91,32 +91,33 @@ class ReflectPlayer(Player):
         self.myMove = their_move
 
 
-class CyclePlayer(Player):
+class CyclePlayer(Player): # This player will cycle through moves each round.
     def __init__(self):
         self.myMove = random.choice(moves)
 
     def move(self):
+        print(self.myMove)
         if self.myMove == 'rock':
-            return 'paper'
+            self.myMove = 'paper'
+            return self.myMove
         elif self.myMove == 'paper':
-            return 'scissors'
+            self.myMove = 'scissors'
+            return self.myMove
         else:
-            return 'rock'
-
-    def learn(self, my_move, their_move):
-        self.myMove = my_move
-
+            self.myMove = 'rock'
+            return self.myMove
 
 if __name__ == '__main__':
     level = ['easy', 'normal', 'hard', 'expert']
     name = input("Hello :), Enter your name: ")
-    level_choice = input("Choise a level (Easy, Normal, Hard, Expert): ")
+    level_choice = input("Choose a level (Easy, Normal, Hard, Expert): ")
     while True:
         if level_choice.lower() in level:
             break
         else:
             print("Invalid level")
-            level_choice = input("Choise again: ")
+            level_choice = input("Choose again: ")
+
     if level_choice == 'easy':
         Computer = Player()
     elif level_choice == 'normal':
@@ -125,5 +126,6 @@ if __name__ == '__main__':
         Computer = CyclePlayer()
     else:
         Computer = ReflectPlayer()
+
     game = Game(HumanPlayer(name), Computer)
     game.play_game()
